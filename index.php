@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
+		<title>Google Maps Example</title>
 		
 		<!-- jQuery and jQuery UI -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -33,16 +33,19 @@
 	      src="https://maps.googleapis.com/maps/api/js?key=<?= $API_KEY?>&sensor=FALSE">
 	    </script>
 
-	        <script type="text/javascript">
-	          // http://snazzymaps.com/
-	          var mapStyle = [{"featureType":"administrative","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"water","stylers":[{"visibility":"simplified"}]},{"featureType":"transit","stylers":[{"visibility":"simplified"}]},{"featureType":"landscape","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"visibility":"off"}]},{"featureType":"road.local","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"water","stylers":[{"color":"#84afa3"},{"lightness":52}]},{"stylers":[{"saturation":-17},{"gamma":0.36}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#3f518c"}]}];
+        <script type="text/javascript">
+			// http://snazzymaps.com/
+			var mapStyle = [{"featureType":"administrative","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"water","stylers":[{"visibility":"simplified"}]},{"featureType":"transit","stylers":[{"visibility":"simplified"}]},{"featureType":"landscape","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"visibility":"off"}]},{"featureType":"road.local","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"water","stylers":[{"color":"#84afa3"},{"lightness":52}]},{"stylers":[{"saturation":-17},{"gamma":0.36}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#3f518c"}]}];
 
-	          var infowindow = null;
-	          var commonOrigin = new google.maps.Point(0, 0);
-	          var commonScaledSize = new google.maps.Size(30, 45);
-	          var customAnchor = new google.maps.Point(0, 32);
-	          var customMarkers = [
-	          	{ 
+			// defaults
+			var infowindow = null;
+			var commonOrigin = new google.maps.Point(0, 0);
+			var commonScaledSize = new google.maps.Size(30, 45);
+			var customAnchor = new google.maps.Point(0, 32);
+          
+			// list of custom markers and their properties
+			var customMarkers = [
+				{ 
 	          		name:'Dan and Sarah',
 	          		lat: 42.376485, 
 	          		lon: -71.235611, 
@@ -54,8 +57,8 @@
 	          			scaledSize: commonScaledSize,
 	          			anchor: customAnchor
 	          		}
-	          	},
-	          	{ 
+				},
+				{ 
 	          		name:'Tom and Karen',
 	          		lat: 42.366969,
 	          		lon: -71.239311, 
@@ -68,68 +71,64 @@
 	          			anchor: customAnchor
 	          		}
 	          	}
-	          ];
+			];
 
-	          function setMarkers(map, locations)
-	          {
-	          	for (var i = 0; i < customMarkers.length; i++)
-	          	{
-	          		// add the markers
-	          		var marker = new google.maps.Marker({
-	          			map: map,
-	          			position: new google.maps.LatLng(customMarkers[i].lat, customMarkers[i].lon),
-	          			icon: customMarkers[i].image,
-	          			title: customMarkers[i].name,
-	          			zIndex: customMarkers[i].zindex,
+		// function to place the markers on the map
+		function setMarkers(map, locations) {
+			for (var i = 0; i < customMarkers.length; i++) {
+				// add the markers
+				var marker = new google.maps.Marker({
+					map: map,
+					position: new google.maps.LatLng(customMarkers[i].lat, customMarkers[i].lon),
+					icon: customMarkers[i].image,
+					title: customMarkers[i].name,
+					zIndex: customMarkers[i].zindex,
 
-	          			// custom property for popup info
-	          			spanText: customMarkers[i].spanText
-	          		});
+					// custom property for popup info
+					spanText: customMarkers[i].spanText
+				});
 
-	          		//  add the infoWindow
-	          		google.maps.event.addListener(marker, 'click', function() {
-					    infowindow.setContent(getInfoWindow(this.title, this.spanText));
-					    infowindow.open(map, this);
-					});
+				//  add the infoWindow
+				google.maps.event.addListener(marker, 'click', function() {
+				    infowindow.setContent(getInfoWindow(this.title, this.spanText));
+				    infowindow.open(map, this);
+				});          		
+			}
+		}
 
-			
-	          			          		
-	          	}
-	          }
-	          // function to populate infoWindow
-	          function getInfoWindow(title, text) {
-	          	return "<div class='contentString'>"
-								+ "<h3 style='width:100%;text-align:center'>" + title + "</h3><br/>"
-								+ "<span class='spanText'>" + text + "</span>"
-						+ "</div>";
-	          }
+		// function to populate infoWindow
+		function getInfoWindow(title, text) {
+          	return "<div class='contentString'>"
+						+ "<h3 style='width:100%;text-align:center'>" + title + "</h3><br/>"
+						+ "<span class='spanText'>" + text + "</span>"
+					+ "</div>";
+        }
 
-	          // initialize function for the map
-		      function initialize() {
-		        var mapOptions = {
-		          center: new google.maps.LatLng(42.376485, -71.235611),
-		          zoom: 13,
-		          styles: mapStyle
-		        };
+		// initialize function for the map
+		function initialize() {
+			var mapOptions = {
+				center: new google.maps.LatLng(42.376485, -71.235611),
+				zoom: 13,
+				styles: mapStyle
+			};
 
-		        // define the infowindow
-          		infowindow = new google.maps.InfoWindow({
-          			content: "loading",
-          			maxWidth: 300,
-          		});
+			// define the infowindow
+			infowindow = new google.maps.InfoWindow({
+				content: "loading",
+				maxWidth: 300,
+			});
 
-		        // create the map
-		        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			// create the map
+			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-		        // place the markers on the map
-		        setMarkers(map, customMarkers);
-		      }
+			// place the markers on the map
+			setMarkers(map, customMarkers);
+		}
 
-		      // load the map
-		      google.maps.event.addDomListener(window, 'load', initialize);
+	      // load the map
+	      google.maps.event.addDomListener(window, 'load', initialize);
 
-
-		    </script>
+	    </script>
 	</head>
 	<body>
 		<div id="map-canvas"/>
