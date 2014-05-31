@@ -38,6 +38,9 @@
 	          var mapStyle = [{"featureType":"administrative","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"water","stylers":[{"visibility":"simplified"}]},{"featureType":"transit","stylers":[{"visibility":"simplified"}]},{"featureType":"landscape","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"visibility":"off"}]},{"featureType":"road.local","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"water","stylers":[{"color":"#84afa3"},{"lightness":52}]},{"stylers":[{"saturation":-17},{"gamma":0.36}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#3f518c"}]}];
 
 	          var infowindow = null;
+	          var commonOrigin = new google.maps.Point(0, 0);
+	          var commonScaledSize = new google.maps.Size(30, 45);
+	          var customAnchor = new google.maps.Point(0, 32);
 	          var customMarkers = [
 	          	{ 
 	          		name:'Dan and Sarah',
@@ -47,9 +50,9 @@
 	          		spanText: "This is the house where Dan and Sarah live.  It's nice, they have 2 cats and a baby on the way.",
 	          		image: {
 	          			url: "assets/images/markers/red.png",
-	          			origin: new google.maps.Point(0, 0),
-	          			scaledSize: new google.maps.Size(30, 45),
-	          			anchor: new google.maps.Point(0, 32)
+	          			origin: commonOrigin,
+	          			scaledSize: commonScaledSize,
+	          			anchor: customAnchor
 	          		}
 	          	},
 	          	{ 
@@ -60,9 +63,9 @@
 	          		spanText: "This is where Tom and Karen live.  They have a new prius which drives quietly",
 	          		image: {
 	          			url: "assets/images/markers/blue.png",
-	          			scaledSize: new google.maps.Size(30, 45),
-	          			origin: new google.maps.Point(0, 0),
-	          			anchor: new google.maps.Point(0, 32)
+	          			origin: commonOrigin,
+	          			scaledSize: commonScaledSize,
+	          			anchor: customAnchor
 	          		}
 	          	}
 	          ];
